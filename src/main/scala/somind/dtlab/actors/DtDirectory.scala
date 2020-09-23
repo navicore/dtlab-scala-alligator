@@ -47,7 +47,6 @@ class DtDirectory extends DtPersistentActorBase[DtTypeMap] {
       case e =>
         e
     }
-
   }
 
   def isValid(m: DtMsg[Any]): DtResult = {

@@ -81,4 +81,11 @@ trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
   implicit val ldt: RootJsonFormat[LazyDtType] = jsonFormat3(LazyDtType)
   implicit val dts: RootJsonFormat[DtState] = jsonFormat1(DtState)
 
+  implicit val dtls: RootJsonFormat[DtLinkSource] = jsonFormat1(DtLinkSource)
+  implicit val dtl: RootJsonFormat[DtLinkDest] = jsonFormat1(DtLinkDest)
+  implicit val dtld: RootJsonFormat[DtLink] = jsonFormat2(DtLink)
+  implicit val ul: RootJsonFormat[UnDtLink] = jsonFormat2(UnDtLink)
+  implicit val dtlm: RootJsonFormat[DtLinkMsg] = jsonFormat2(DtLinkMsg)
+  implicit val dtmap: RootJsonFormat[DtLinkMap] = jsonFormat1(DtLinkMap)
+
 }
