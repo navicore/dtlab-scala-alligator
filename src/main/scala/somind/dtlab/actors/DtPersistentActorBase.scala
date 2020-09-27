@@ -16,7 +16,7 @@ abstract class DtPersistentActorBase[T]
 
   def takeSnapshot(): Unit = {
     if (lastSequenceNr % snapshotInterval == 0 && lastSequenceNr != 0) {
-      saveSnapshot(state)
+      saveSnapshot((state, links))
       Observer("actor_saved_state_snapshot")
     }
   }

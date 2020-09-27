@@ -1,13 +1,13 @@
 package somind.dtlab
 
-import ch.megard.akka.http.cors.scaladsl.CorsDirectives._
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
+import ch.megard.akka.http.cors.scaladsl.CorsDirectives._
 import com.typesafe.scalalogging.LazyLogging
+import somind.dtlab.Conf._
 import somind.dtlab.models.JsonSupport
-import somind.dtlab.routes._
-import Conf._
 import somind.dtlab.observe.ObserverRoute
+import somind.dtlab.routes._
 
 object Main extends LazyLogging with JsonSupport with HttpSupport {
 
@@ -22,9 +22,9 @@ object Main extends LazyLogging with JsonSupport with HttpSupport {
                 pathPrefix(urlpath) {
                   ignoreTrailingSlash {
                     TypeApiRoute.apply ~
-                      ActorApiRoute.apply ~
-                      OperatorApiRoute.apply ~
-                      LinkApiRoute.apply
+                      TelemetryApiRoute.apply("actor") ~
+                      LinkApiRoute.apply("link") ~
+                      OperatorApiRoute.apply
                   }
                 }
               }

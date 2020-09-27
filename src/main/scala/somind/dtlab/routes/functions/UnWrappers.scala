@@ -4,7 +4,7 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.server._
 import com.typesafe.scalalogging.LazyLogging
 import somind.dtlab.models._
-import somind.dtlab.routes.ActorApiRoute.applyTelemetryMsg
+import somind.dtlab.routes.TelemetryApiRoute.applyMsg
 import somind.dtlab.routes.functions.UnMarshallers._
 
 object UnWrappers extends JsonSupport with Directives with LazyLogging {
@@ -16,7 +16,7 @@ object UnWrappers extends JsonSupport with Directives with LazyLogging {
       {
         onSuccess(NamedUnMarshaller(Some(ntelem.telemetry()), dtp)) {
           case Some(telemetry: Telemetry) =>
-            applyTelemetryMsg(dtp, telemetry)
+            applyMsg(TelemetryMsg(dtp, telemetry))
           case _ =>
             logger.warn(s"can not unmarshall telemetry")
             complete(
@@ -30,7 +30,7 @@ object UnWrappers extends JsonSupport with Directives with LazyLogging {
 
   def IdxUnWrapper(dtp: DtPath): Route = {
     entity(as[LazyTelemetry]) { telem =>
-      applyTelemetryMsg(dtp, telem.telemetry())
+      applyMsg(TelemetryMsg(dtp, telem.telemetry()))
     }
   }
 

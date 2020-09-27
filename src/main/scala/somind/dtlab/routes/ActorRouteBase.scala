@@ -29,7 +29,7 @@ import somind.dtlab.routes.functions.UnWrappers._
   * use the named or pathed telemetry model.
   *
   */
-object ActorApiRoute
+class ActorRouteBase[T]
     extends JsonSupport
     with LazyLogging
     with Directives
@@ -37,8 +37,8 @@ object ActorApiRoute
 
   type UnWrapper = DtPath => Route
 
-  def applyTelemetryMsg(dtp: DtPath, telemetry: Telemetry): Route = {
-    onSuccess(dtDirectory ask TelemetryMsg(dtp, telemetry)) {
+  def applyMsg(msg: T): Route = {
+    onSuccess(dtDirectory ask msg) {
       case DtOk() =>
         Observer("actor_route_post_success")
         complete(StatusCodes.Accepted)
@@ -118,8 +118,8 @@ object ActorApiRoute
       }
     }
 
-  def apply: Route =
-    pathPrefix("actor") {
+  def apply(prefix: String): Route =
+    pathPrefix(prefix) {
       pathPrefix(Segments(20)) { segs: List[String] =>
         applySegs(segs)
       } ~

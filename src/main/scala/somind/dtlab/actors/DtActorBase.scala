@@ -2,9 +2,11 @@ package somind.dtlab.actors
 
 import akka.actor.{Actor, Props}
 import com.typesafe.scalalogging.LazyLogging
-import somind.dtlab.models.DtMsg
+import somind.dtlab.models.{DtLinkMap, DtMsg}
 
 trait DtActorBase extends Actor with LazyLogging {
+
+  var links: DtLinkMap = DtLinkMap(Map())
 
   def create(m: DtMsg[Any], name: String): Unit =
     context.actorOf(Props[DtActor], name) forward m
