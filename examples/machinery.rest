@@ -16,6 +16,13 @@ GET /dtlab-alligator/type/machinery
 GET /dtlab-alligator/actor/machinery/one
 
 --
+POST /dtlab-alligator/link/machinery/one
+{
+  "source": "/fleet/us/mean",
+  "dest": "/machinery/one/mean"
+}
+
+--
 GET /dtlab-alligator/actor/machinery/one?format=named
 
 --
